@@ -7,7 +7,7 @@ class PersonAdmin(admin.ModelAdmin):
     # display the list in the front
     list_display = ('name','price2')
     # shows filter tag at the right side of the table
-    list_filter =(ProjectFilter,('price2',PriceFilter),)
+    list_filter =(ProjectFilter,PriceFilter)
     # searching on the basis of fields name inside the Project Table
     search_fields = ['name','price2']
 

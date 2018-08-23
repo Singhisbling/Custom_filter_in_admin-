@@ -1,4 +1,4 @@
-from django.contrib.admin import SimpleListFilter,FieldListFilter
+from django.contrib.admin import SimpleListFilter
 from django.db.models import Q
 from django.contrib.admin.filters import AllValuesFieldListFilter
 
@@ -53,9 +53,29 @@ class ProjectFilter(InputFilter):
 #         return queryset.filter(any_name)
 
 
-class PriceFilter(AllValuesFieldListFilter):
-    template = 'admin/filter.html'
+class PriceFilter(SimpleListFilter):
+    parameter_name = 'price2'
+    title = _('Price')
+    def lookups(self, request, model_admin):
+        return (
+            ('0', _('0-5')),
+            ('1', _('6 - 10')),
+            ('2', _('11 - 20')),
+            ('3', _('21 - 30')),
+        )
 
+    def queryset(self, request, queryset):
+        if self.value() == '0':
+            return queryset.filter(price2__gte=0, price2__lte=5)
+
+        if self.value() == "1":
+            return queryset.filter(price2__gte=6, price2__lte=10)
+
+        if self.value() == "2":
+            return queryset.filter(price2__gte=11, price2__lte=20)
+
+        if self.value() == "3":
+            return queryset.filter(price2__gte=21, price2__lte=30)
 
 
 
